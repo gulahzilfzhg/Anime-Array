@@ -116,7 +116,7 @@ The second motivation was simpler. Anime fan communities tend to be good at arch
 
 Twelve characters, each with its own voice, temperament and way of speaking.
 
-The hard part of this product is not generating text. It is making twelve characters not sound the same. Most AI chat products produce a single voice with a different name above it. The characters here were written to behave differently under identical pressure:
+Most AI chat products produce a single voice with a different name above it. The characters here were written to behave differently under identical pressure:
 
 - **Gojo Satoru** — playful, annoyingly confident, impossible to rattle
 - **Ryomen Sukuna** — contemptuous of everyone, and entirely aware of it
