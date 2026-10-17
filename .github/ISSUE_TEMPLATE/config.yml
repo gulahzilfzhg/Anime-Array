@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Character request
+    url: https://animearray.site/ai-hub/
+    about: The roster follows what readers actually ask for. Requests are collected here rather than as issues.
+  - name: Report a vulnerability privately
+    url: https://github.com/muqeet-1138/Anime-Array/blob/main/SECURITY.md
+    about: Do not open a public issue for a security problem. Follow the private reporting route.
+  - name: Copyright or takedown request
+    url: https://animearray.site/contact-us/
+    about: Rights holder requests are prioritised above everything else in the queue.
+  - name: Platform problem
+    url: https://animearray.site/contact-us/
+    about: Problems with the working tools rather than the documentation belong in the contact form.

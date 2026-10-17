@@ -1,0 +1,69 @@
+name: Check documentation site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Fastest failing job first, and nothing here needs write access.
+permissions:
+  contents: read
+
+concurrency:
+  group: check-site-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Validate pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node
+        uses: actions/setup-node@1e60f620b9541dca151540d0f8b6bce42e3197 # v4.0.3
+        with:
+          node-version: '20'
+
+      - name: Cross-validate data against prose
+        run: node tools/check-data.mjs
+
+      - name: Validate metadata, structured data and links
+        run: node tools/check-site.mjs
+
+      # Guards against publishing an internal path, a stack name, or a
+      # credential fragment by accident.
+      #
+      # The terms are assembled from fragments at run time. That is deliberate:
+      # a checker that literally contained every term it forbids would publish
+      # exactly the list it exists to keep private, so nothing sensitive appears
+      # in this file as plain text.
+      - name: Confirm no internal paths are published
+        env:
+          SPLIT: '@@'
+          TERM_A: >-
+            wp-@@content|wp-@@admin|wp-@@json|wp-@@login|admin-@@ajax|wp-@@includes
+          TERM_B: >-
+            app-@@core|mu-@@plugin|multi@@site|light@@speed|host@@inger|h-@@panel
+          TERM_C: >-
+            spec@@tra|ultimate-@@member|ad-@@sterra|grav@@atar|open@@ai|anthro@@pic
+        run: |
+          set -euo pipefail
+          leaked=0
+          # tr turns the | separators into word separators. Without this, bash
+          # would treat each TERM_* variable as ONE word and the guard would
+          # search for a single pipe-delimited string that never matches --
+          # failing open, silently. This line is load-bearing.
+          for raw in $(echo "$TERM_A $TERM_B $TERM_C" | tr '|' ' '); do
+            term="${raw//$SPLIT/}"
+            hits=$(grep -rIl --exclude-dir=.git --exclude-dir=workflows -- "$term" . || true)
+            if [ -n "$hits" ]; then
+              printf '::error::an internal path or stack name appears in:\n%s\n' "$hits"
+              leaked=1
+            fi
+          done
+          exit "$leaked"

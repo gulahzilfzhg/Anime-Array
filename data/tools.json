@@ -1,0 +1,77 @@
+{
+  "$comment": "Canonical reference data for the Anime Array product surface. Machine-readable so counts can be verified without scraping HTML.",
+  "updated": "2026-10-17",
+  "products": {
+    "count": 4,
+    "note": "Four products sit under the Anime Array platform. All are free and none require an account."
+  },
+  "items": [
+    {
+      "id": "roleplay",
+      "name": "Anime Array Roleplay",
+      "url": "https://roleplay.animearray.site/",
+      "summary": "Hold a real conversation with twelve anime characters, each of whom answers in a distinct voice and behaves differently under pressure.",
+      "requiresAccount": false,
+      "price": "0"
+    },
+    {
+      "id": "otaku-ai",
+      "name": "Otaku AI",
+      "url": "https://otaku.animearray.site/",
+      "summary": "A conversational anime assistant that runs in two modes and includes eight built-in tools for discovery, lore and analysis.",
+      "requiresAccount": false,
+      "price": "0"
+    },
+    {
+      "id": "anipick",
+      "name": "AniPick AI",
+      "url": "https://animearray.site/anipick/",
+      "summary": "A recommendation engine that builds a shortlist from what you actually watched, loved and skipped rather than returning a generic popular list.",
+      "requiresAccount": false,
+      "price": "0"
+    },
+    {
+      "id": "vision-ai",
+      "name": "Vision AI",
+      "url": "https://animearray.site/vision-ai/",
+      "summary": "An anime image generator for character art, wallpapers and creative work. Outputs are original and are not reproductions of existing media.",
+      "requiresAccount": false,
+      "price": "0"
+    }
+  ],
+  "otakuAi": {
+    "modes": {
+      "count": 2,
+      "items": [
+        {
+          "id": "standard-brain",
+          "name": "Standard Brain",
+          "summary": "Direct, knowledgeable answers about series, characters, lore and the platform itself."
+        },
+        {
+          "id": "character-rp",
+          "name": "Character RP",
+          "summary": "Answers given in the voice of an anime character rather than as a direct explanation."
+        }
+      ]
+    },
+    "tools": {
+      "count": 8,
+      "items": [
+        { "id": "recommend-anime",   "name": "Recommend Anime",  "summary": "Builds a shortlist from what you tell it you have already watched." },
+        { "id": "currently-airing",  "name": "Currently Airing", "summary": "What is running right now, rather than a stale list." },
+        { "id": "mood-match",        "name": "Mood Match",       "summary": "Picks something based on how you want to feel, not only on genre." },
+        { "id": "anime-search",      "name": "Anime Search",     "summary": "Finds a title when you only half remember it." },
+        { "id": "character-creator", "name": "Character Creator","summary": "Build an original character to explore ideas with." },
+        { "id": "anime-quiz",        "name": "Anime Quiz",       "summary": "Works out what your taste actually is." },
+        { "id": "power-scaling",     "name": "Power Scaling",    "summary": "Compares characters and their abilities with the assumptions stated first." },
+        { "id": "philosophy",        "name": "Philosophy",       "summary": "The arguments and themes underneath a series." }
+      ]
+    }
+  },
+  "hub": {
+    "name": "AI Hub",
+    "url": "https://animearray.site/ai-hub/",
+    "summary": "Every Anime Array tool on one page, and the place character requests are collected."
+  }
+}

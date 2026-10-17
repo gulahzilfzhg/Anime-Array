@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Technology — How Anime Array is built, and why</title>
+<meta name="description" content="How the Anime Array platform is built: server-rendered pages, progressive enhancement, server-side integrations, render-time configuration and edge caching.">
+<meta name="theme-color" content="#b3123c">
+<link rel="canonical" href="https://muqeet-1138.github.io/Anime-Array/technology.html">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Anime Array">
+<meta property="og:title" content="Technology — How Anime Array is built, and why">
+<meta property="og:description" content="Server-rendered pages, progressive enhancement, server-side integrations and reversibility. The reasoning behind the architecture.">
+<meta property="og:url" content="https://muqeet-1138.github.io/Anime-Array/technology.html">
+<meta property="og:image" content="https://muqeet-1138.github.io/Anime-Array/assets/og-technology.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="How Anime Array is built, and why">
+<meta name="twitter:image" content="https://muqeet-1138.github.io/Anime-Array/assets/og-technology.png">
+<meta name="twitter:image:alt" content="How Anime Array is built, and why">
+<meta property="og:locale" content="en_GB">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technology — How Anime Array is built, and why">
+<meta name="twitter:description" content="The architectural approach behind Anime Array, and the reasoning for it.">
+
+<link rel="stylesheet" href="assets/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://muqeet-1138.github.io/Anime-Array/technology.html#page",
+      "url": "https://muqeet-1138.github.io/Anime-Array/technology.html",
+      "headline": "How Anime Array is built, and why",
+      "description": "The architectural approach behind the Anime Array platform: server-rendered HTML, progressive enhancement, server-side integrations, render-time configuration, edge caching and accessibility-first output.",
+      "inLanguage": "en-GB",
+      "isPartOf": { "@id": "https://muqeet-1138.github.io/Anime-Array/#website" },
+      "publisher": { "@id": "https://animearray.site/#organization" },
+      "author": { "@id": "https://animearray.site/#organization" },
+      "proficiencyLevel": "Beginner",
+      "dependencies": "Standard web platform features: HTML, CSS, JavaScript and HTTP."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://muqeet-1138.github.io/Anime-Array/technology.html#crumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://muqeet-1138.github.io/Anime-Array/" },
+        { "@type": "ListItem", "position": 2, "name": "Technology", "item": "https://muqeet-1138.github.io/Anime-Array/technology.html" }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://animearray.site/#organization",
+      "name": "Anime Array",
+      "url": "https://animearray.site/",
+      "email": "contact@animearray.site",
+      "sameAs": [
+        "https://animearray.site/",
+        "https://roleplay.animearray.site/",
+        "https://otaku.animearray.site/",
+        "https://animearray.site/ai-hub/"
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap bar">
+    <a class="brand" href="index.html">
+      <span class="mark" aria-hidden="true">Aa</span>
+      <span>Anime Array</span>
+    </a>
+    <nav class="site" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="products.html">Products</a>
+      <a href="characters.html">Characters</a>
+      <a href="technology.html" aria-current="page">Technology</a>
+      <a href="faq.html">FAQ</a>
+      <a href="policies.html">Policies</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Technology</p>
+      <h1>How it is built, and why it is built that way</h1>
+      <p class="lede">Anime Array is a self-hosted, server-rendered application. This page describes the approach and the reasoning behind it. It deliberately does not document internals.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="layout">
+      <article>
+
+        <h2 id="scope">What this page covers, and what it does not</h2>
+        <p><strong>Anime Array is a self-hosted, server-rendered web application that serves complete HTML over HTTPS, calls its AI and advertising integrations from the server, and caches its output at the edge.</strong> That sentence is the honest summary. Everything below is the reasoning behind it.</p>
+        <p>This page explains <em>how the platform is put together</em>. It does not publish the stack inventory, the server configuration, the deployment layout, the file structure, dependency versions, credential configuration or any operational detail. That is not secrecy for its own sake — a small independent site gains nothing from publishing an inventory of its own moving parts to people looking for weaknesses, and the interesting engineering questions can be answered without it.</p>
+        <div class="callout">
+          <span class="label">A note for reviewers</span>
+          <p>If you are looking for a vulnerability report rather than an architecture explanation, the private route is in <a href="https://github.com/muqeet-1138/Anime-Array/blob/main/SECURITY.md">SECURITY.md</a>. If you are looking for how to contribute, the process is in <a href="https://github.com/muqeet-1138/Anime-Array/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+        </div>
+
+        <h2 id="principle">The governing idea</h2>
+        <p>A small project cannot afford fragile dependencies. Every architectural choice on Anime Array comes back to one question: can one person understand this, trace it, and repair it on a bad evening without a runbook?</p>
+        <p>That question resolves most arguments on its own. Where there was a choice between something clever and something comprehensible, the comprehensible option has won almost every time — not because cleverness is bad, but because the cost of cleverness is paid at the worst possible moment, which is when it has already broken and nobody remembers why it was written that way.</p>
+        <p>The second filter is narrower: does this help someone on a slow phone on mobile data? A feature that works beautifully on fast broadband and is unusable on a throttled mobile connection does not ship, regardless of how good it looks in a screenshot.</p>
+
+        <h2 id="rendering">Server-rendered HTML</h2>
+        <p>Every page on Anime Array arrives complete from the server. There is no single-page application shell, no client-side router, and no dependency on a framework running in the browser to produce the content a visitor is reading.</p>
+        <p>This has a concrete, measurable benefit rather than an aesthetic one. Content is present in the first response, which means it is present for a reader on a slow connection, for a crawler, for a screen reader that attaches after load, and for anyone whose JavaScript failed to execute for any reason at all. There is no second request to discover the page you already asked for.</p>
+        <p>It also makes the failure mode much better. When client-side rendering fails, the failure is usually a blank page with an error somewhere in a console most visitors will never open. When server-side rendering fails, the failure is a single failed request — obvious, logged, attributable, and fixable by one person who can see the actual cause.</p>
+
+        <h2 id="progressive">Progressive enhancement</h2>
+        <p>Core reading, character conversation and the AI assistant work without JavaScript. What JavaScript adds is polish — responses streaming in word by word rather than appearing all at once, share cards, image generation, instant history — never basic access.</p>
+        <p>The test applied to every feature before it ships is deliberately blunt: if the page is useful with scripting disabled, the feature is allowed. If it is only useful with scripting enabled, it needs a reason strong enough to be written down, and there are very few of those.</p>
+        <p>This is also why the platform feels fast rather than merely loading quickly. Responses begin arriving immediately and render progressively, so time-to-first-meaningful-word is short even when time-to-complete is long. On a throttled connection that difference is the whole experience.</p>
+
+        <h2 id="server-side">Server-side integrations</h2>
+        <p>Third-party AI and advertising calls are made from the server rather than from the visitor's browser. This is a security decision first and a performance decision second.</p>
+        <p>Keeping those calls server-side means API credentials, service account details and integration identifiers never appear in page source, never reach the browser, and cannot be extracted by anyone viewing it. It also means the requests are not competing with the visitor's own connection for bandwidth, and it means a failed integration degrades into a slower response rather than an error on screen.</p>
+        <p>The consequence is that pages carry less third-party code than most sites of comparable function, which directly improves how quickly a page becomes usable on mobile data.</p>
+
+        <h2 id="config">Render-time configuration</h2>
+        <p>Behaviour on Anime Array is applied while a page is being produced rather than stored inside the content that page contains.</p>
+        <p>This has one dominant practical benefit: <strong>every change is reversible in a single step.</strong> Turning something off, correcting a mistake or rolling back a change means removing or restoring one unit of code, rather than repairing database rows that were written into posts, templates or option tables. It is the reason the platform has never been down for a long period, and it is the reason mistakes are cheap enough that shipping small changes often is safer than shipping one large change rarely.</p>
+        <p>The second benefit is immediacy. A configuration change takes effect on the next request rather than after a cache expiry window or a manual purge.</p>
+
+        <h2 id="cache">Caching and delivery</h2>
+        <p>Static assets and page output are cached close to the visitor. Pages are compressed in transit, served over HTTPS, and cached with sensible headers so a repeat visit costs very little.</p>
+        <p>Cache invalidation is handled deliberately rather than reactively, because a stale page published to the world is worse than a slow page. When something important changes, the cache is purged rather than left to expire.</p>
+
+        <h2 id="assets">Assets and images</h2>
+        <p>Images are served at the size they are displayed at, in modern formats, with dimensions declared so the layout does not jump while they load. Fonts and stylesheets are sized to avoid blocking the first render unnecessarily. Space is reserved for content that arrives dynamically, so streaming responses do not push the rest of the page around as they appear.</p>
+        <p>None of this is exotic. It is simply the list of things that are checked before a feature is called finished, and each one has caused a visible problem at some point on this or any other site.</p>
+
+        <h2 id="accessibility-tech">Accessibility in the output</h2>
+        <p>Accessibility is a property of the markup, not a layer applied afterwards, which is why the platform can treat it as a requirement rather than a retrofit.</p>
+        <ul>
+          <li><strong>Native elements first.</strong> Buttons are buttons and links are links, chosen by behaviour rather than appearance, so keyboard behaviour and semantics come for free.</li>
+          <li><strong>Real heading hierarchy.</strong> Heading levels describe document structure. They are not chosen to produce a particular font size.</li>
+          <li><strong>Visible focus.</strong> A focus indicator that does not rely on colour alone, visible against the actual background it appears on.</li>
+          <li><strong>Live regions for streaming.</strong> Character and assistant responses are announced as they arrive, so a screen reader user is not left guessing whether anything is happening.</li>
+          <li><strong>Described errors.</strong> Validation failures are stated in words, not indicated by a colour change.</li>
+          <li><strong>Reduced motion honoured.</strong> Animation, transitions and smooth scrolling respect the operating system preference.</li>
+        </ul>
+        <p>Full detail on the accessibility position is on the <a href="about.html#access">about page</a>.</p>
+
+        <h2 id="seo">Search and answer engines</h2>
+        <p>Anime Array is built to be readable by machines as well as people, because a large share of discovery now happens through search results and AI answers rather than through typed queries.</p>
+        <ul>
+          <li><strong>Semantic structure.</strong> Real headings, real landmarks, real lists, so the meaning of a page is recoverable without reading the stylesheet.</li>
+          <li><strong>Structured data.</strong> Organization, WebSite, SoftwareApplication, FAQPage and BreadcrumbList markup where it genuinely describes the page, validated so it is not decorative.</li>
+          <li><strong>Plain factual claims.</strong> Definitional statements written so they can be quoted accurately and lifted without losing their meaning — this documentation is written that way deliberately.</li>
+          <li><strong>Canonical URLs and correct metadata.</strong> Every page declares one canonical address, a title and a description that describe it rather than describing the site.</li>
+          <li><strong>Fast, stable, crawlable output.</strong> Server-rendered HTML means crawlers see the content in the first response.</li>
+        </ul>
+
+        <h2 id="security">Security approach</h2>
+        <p>Security work follows the same principle as everything else: keep it simple enough that one person can reason about all of it.</p>
+        <ul>
+          <li><strong>Least privilege.</strong> Administrative and data access is restricted to what each component genuinely needs.</li>
+          <li><strong>Everything behind HTTPS</strong>, with redirection away from insecure requests.</li>
+          <li><strong>No credentials in the browser.</strong> Integration secrets stay on the server, which is why integrations are called server-side.</li>
+          <li><strong>Input treated as untrusted.</strong> Anything a visitor can influence is validated before it is used, and output is escaped according to where it is going.</li>
+          <li><strong>Requests authenticated and authorised</strong> before they take effect, not merely when the interface is opened.</li>
+          <li><strong>Dependency review.</strong> Third-party code is added sparingly and reviewed before it lands, because supply chain risk is the part nobody budgets for.</li>
+          <li><strong>Documented private reporting route.</strong> Vulnerabilities are reported privately, not filed as public issues.</li>
+        </ul>
+        <p>Vulnerabilities can be reported through <a href="https://github.com/muqeet-1138/Anime-Array/blob/main/SECURITY.md">SECURITY.md</a>. Genuine reports are acknowledged and fixed.</p>
+
+        <h2 id="privacy-tech">Privacy properties</h2>
+        <p>On Anime Array, the privacy properties are structural rather than promised, which means they hold because of how the platform is built rather than because of a policy document.</p>
+        <p>Because accounts are optional and every core feature works without one, the platform does not need to collect an email address from someone who just wants a recommendation. Because integrations run server-side, advertising and service identifiers are not embedded in page source. Because analytics are used to understand aggregate usage rather than to build a profile of individuals, and site administrators are excluded from reporting so internal traffic does not distort the figures, the data collected is small on purpose.</p>
+
+        <h2 id="new-work">How new work ships</h2>
+        <p>Every change follows the same shape: small, reversible, readable, and verified before it lands. A change that cannot be undone in a single step needs a stronger justification than usual.</p>
+        <ol>
+          <li><strong>Define the problem</strong> in a sentence, including who has it.</li>
+          <li><strong>Make it work without scripting</strong> where that is possible, then add the enhancement.</li>
+          <li><strong>Check it on a throttled mobile connection</strong> before anything else is considered done.</li>
+          <li><strong>Check it with a keyboard</strong> and confirm the focus order makes sense.</li>
+          <li><strong>Check contrast, labels and live regions</strong> as part of the same pass.</li>
+          <li><strong>Verify on a real device</strong>, not only in a desktop emulator.</li>
+          <li><strong>Keep the revert path intact</strong>, and confirm it works before shipping.</li>
+        </ol>
+
+        <h2 id="constraints">Known constraints</h2>
+        <p>Stating limitations is more useful than claiming completeness. Anime Array currently depends on English, covers twelve characters in roleplay with more requested and in progress, has no group or multi-character conversations yet, has no watchlist import from external tracking services, and carries no mobile or desktop application — the platform is the website. Where a feature does not exist yet, it does not exist yet, and the roadmap is written in intentions rather than promises.</p>
+
+        <h2 id="learn">Learning more</h2>
+        <p>The platform's approach is described further in <a href="https://github.com/muqeet-1138/Anime-Array/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>, the publication practices that keep the AI assistant accurate are in the platform's <a href="https://animearray.site/editorial-guidelines-and-corrections-policy/">editorial and corrections policy</a>, and the approach to appearing accurately in search results and AI answers is written up in the repository's guides directory.</p>
+
+      </article>
+
+      <aside>
+        <nav class="toc" aria-label="On this page">
+          <h2>On this page</h2>
+          <ol>
+            <li><a href="#scope">Scope of this page</a></li>
+            <li><a href="#principle">The governing idea</a></li>
+            <li><a href="#rendering">Server-rendered HTML</a></li>
+            <li><a href="#progressive">Progressive enhancement</a></li>
+            <li><a href="#server-side">Server-side integrations</a></li>
+            <li><a href="#config">Render-time configuration</a></li>
+            <li><a href="#cache">Caching and delivery</a></li>
+            <li><a href="#assets">Assets and images</a></li>
+            <li><a href="#accessibility-tech">Accessibility in the output</a></li>
+            <li><a href="#seo">Search and answer engines</a></li>
+            <li><a href="#security">Security approach</a></li>
+            <li><a href="#privacy-tech">Privacy properties</a></li>
+            <li><a href="#new-work">How new work ships</a></li>
+            <li><a href="#constraints">Known constraints</a></li>
+          </ol>
+        </nav>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>Products</h2>
+        <ul>
+          <li><a href="https://roleplay.animearray.site/">Character Roleplay</a></li>
+          <li><a href="https://otaku.animearray.site/">Otaku AI</a></li>
+          <li><a href="https://animearray.site/anipick/">AniPick AI</a></li>
+          <li><a href="https://animearray.site/vision-ai/">Vision AI</a></li>
+          <li><a href="https://animearray.site/ai-hub/">AI Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Main site</h2>
+        <ul>
+          <li><a href="https://animearray.site/">Home</a></li>
+          <li><a href="https://animearray.site/about-us/">About Us</a></li>
+          <li><a href="https://animearray.site/faqs/">FAQs</a></li>
+          <li><a href="https://animearray.site/trending/">Trending</a></li>
+          <li><a href="https://animearray.site/upcoming/">Upcoming</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Policies</h2>
+        <ul>
+          <li><a href="policies.html">Content &amp; IP Policy</a></li>
+          <li><a href="https://animearray.site/privacy-policy/">Privacy Policy</a></li>
+          <li><a href="https://animearray.site/terms-of-service/">Terms of Service</a></li>
+          <li><a href="https://animearray.site/editorial-guidelines-and-corrections-policy/">Corrections Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>This site</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="characters.html">Characters</a></li>
+          <li><a href="technology.html">Technology</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="policies.html">Policies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="https://animearray.site/contact-us/">Contact form</a></li>
+          <li><a href="mailto:contact@animearray.site">contact@animearray.site</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">Anime Array is an independent fan project. It hosts no video and is not affiliated with, endorsed by or sponsored by any anime studio, publisher or licensor. Character and series names belong to their respective owners. Documentation released under the MIT Licence.</p>
+  </div>
+</footer>
+</body>
+</html>

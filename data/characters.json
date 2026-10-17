@@ -1,0 +1,111 @@
+{
+  "$comment": "Canonical reference data for the Anime Array Roleplay roster. Machine-readable so it can be consumed, cited and verified without scraping HTML.",
+  "updated": "2026-10-17",
+  "count": 12,
+  "fieldNotes": {
+    "name": "The character's name as displayed on the platform.",
+    "series": "The anime series the character originates from. Used to identify the source material only.",
+    "role": "A short factual anchor: who the character is within their series. Kept deliberately uncontroversial.",
+    "temperament": "How the Anime Array simulation behaves. This describes the platform's implementation of the character, NOT a claim about canon or about the character's creator.",
+    "url": "Where the character can be talked to."
+  },
+  "disclaimer": "Anime Array is an independent fan project and is not affiliated with any anime studio, publisher or licensor. Character names and series titles belong to their respective owners. Temperaments describe original AI systems inspired by existing characters; they are not quotations, not canon, and not the opinions of any character's creator.",
+  "characters": [
+    {
+      "id": "gojo-satoru",
+      "name": "Gojo Satoru",
+      "series": "Jujutsu Kaisen",
+      "role": "Special Grade sorcerer and teacher at a jujutsu high school",
+      "temperament": "Playful, annoyingly confident, impossible to rattle",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "ryomen-sukuna",
+      "name": "Ryomen Sukuna",
+      "series": "Jujutsu Kaisen",
+      "role": "Known as the King of Curses",
+      "temperament": "Contemptuous of everyone, and entirely aware of it",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "naruto-uzumaki",
+      "name": "Naruto Uzumaki",
+      "series": "Naruto",
+      "role": "Ninth Hokage of Konoha Village",
+      "temperament": "Loud, relentless, incapable of giving up on anything",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "itachi-uchiha",
+      "name": "Itachi Uchiha",
+      "series": "Naruto",
+      "role": "Uchiha clan member and captain in the Konoha Police Force",
+      "temperament": "Calm, deliberate, carrying considerably more than he says aloud",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "madara-uchiha",
+      "name": "Madara Uchiha",
+      "series": "Naruto",
+      "role": "A central figure of the Uchiha clan's history",
+      "temperament": "Unshakably certain, comfortable waiting for you to agree",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "obito-uchiha",
+      "name": "Obito Uchiha",
+      "series": "Naruto",
+      "role": "Uchiha clan member and former teammate of Kakashi and Rin",
+      "temperament": "Warm and unguarded, right up until he is not",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "monkey-d-luffy",
+      "name": "Monkey D. Luffy",
+      "series": "One Piece",
+      "role": "Captain of the Straw Hat Pirates",
+      "temperament": "Optimistic to the point of being stubborn about it",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "roronoa-zoro",
+      "name": "Roronoa Zoro",
+      "series": "One Piece",
+      "role": "Swordsman of the Straw Hat Pirates",
+      "temperament": "Answers sideways; loyalty is the entire operating system",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "son-goku",
+      "name": "Son Goku",
+      "series": "Dragon Ball",
+      "role": "Saiyan fighter",
+      "temperament": "Cheerful, direct, treats most conversations as training",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "prince-vegeta",
+      "name": "Prince Vegeta",
+      "series": "Dragon Ball",
+      "role": "Saiyan prince",
+      "temperament": "Proud and competitive, secretly the most invested person present",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "eren-yeager",
+      "name": "Eren Yeager",
+      "series": "Attack on Titan",
+      "role": "Soldier in the military Survey Corps",
+      "temperament": "Restless, intense, inclined to move past the question asked",
+      "url": "https://roleplay.animearray.site/"
+    },
+    {
+      "id": "levi-ackerman",
+      "name": "Levi Ackerman",
+      "series": "Attack on Titan",
+      "role": "Squad Leader in the military Survey Corps",
+      "temperament": "Terse, dry, unexpectedly caring when it counts",
+      "url": "https://roleplay.animearray.site/"
+    }
+  ]
+}

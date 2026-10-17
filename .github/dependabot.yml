@@ -1,0 +1,19 @@
+# These are placeholder values so the templates work out of the box.
+# Replace @username with the handle that should be assigned.
+
+version: 2
+
+updates:
+  # GitHub Actions workflow definitions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+
+  # There are currently no runtime dependencies and no build step, so this
+  # ecosystem is intentionally absent. If that ever changes, add the ecosystem
+  # here rather than letting a dependency go unmonitored.
+
+  # The social cards are generated binaries. If a generator is ever added to
+  # the repository, add its ecosystem here at the same time.

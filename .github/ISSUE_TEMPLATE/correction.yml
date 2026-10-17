@@ -1,0 +1,77 @@
+name: Correction
+description: Report a factual error, a wrong claim, or a character that behaves incorrectly
+title: "Correction: "
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are the highest-priority kind of report this project receives,
+        and this form takes about two minutes. No technical skill is needed.
+
+        A wrong fact about a series is a defect, not a suggestion. So is a
+        character's behaviour that misrepresents them badly.
+
+  - type: input
+    id: where
+    attributes:
+      label: Where is the error?
+      description: The page, character or tool it appears on. A URL is ideal, but a name is fine.
+      placeholder: "docs/characters.html, Levi Ackerman"
+    validations:
+      required: true
+
+  - type: input
+    id: question
+    attributes:
+      label: What was asked?
+      description: The question that produced the wrong answer, quoted exactly if you can.
+      placeholder: "Are you affiliated with any studio?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What was said?
+      description: The answer that is wrong, quoted exactly.
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct
+    attributes:
+      label: What should it say instead?
+      description: And if you are confident about the correction, where that comes from. A source helps but is not required — say if you are going on the series itself.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What sort of error is this?
+      options:
+        - A factual error about a series, character or creator
+        - A character's behaviour misrepresents them
+        - A claim about Anime Array is wrong or misleading
+        - A link is broken or points somewhere wrong
+        - Something is inaccessible
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: anything
+    attributes:
+      label: Anything else?
+      description: Optional. Screenshots are welcome if something is rendering wrong.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Before you submit
+      options:
+        - label: I have searched the existing issues and this is not already reported.
+          required: false

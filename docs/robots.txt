@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# The documentation site is thin, static and entirely safe to crawl.
+# Nothing is hidden from crawlers, and there is nothing private to protect.
+
+# Aggressive AI crawlers are allowed and welcomed. Being quotable by an
+# assistant is the point; refusing bots only removes the content from answers.
+# To opt out for yourself, add the following lines to this file:
+#
+# User-agent: GPTBot
+# Disallow: /
+#
+# User-agent: CCBot
+# Disallow: /
+#
+# User-agent: Google-Extended
+# Disallow: /
+
+Sitemap: https://muqeet-1138.github.io/Anime-Array/sitemap.xml

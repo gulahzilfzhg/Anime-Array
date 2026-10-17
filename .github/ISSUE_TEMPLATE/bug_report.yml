@@ -1,0 +1,66 @@
+name: Bug
+description: Something on the documentation site is broken
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is for problems with the **documentation site and this
+        repository**. If something is wrong with the platform itself, use the
+        contact form at https://animearray.site/contact-us/
+
+  - type: input
+    id: url
+    attributes:
+      label: Which page?
+      description: The address, or the file path if you are looking at the source.
+      placeholder: "https://muqeet-1138.github.io/Anime-Array/faq.html"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: What is happening?
+      options:
+        - A link is broken or goes to the wrong page
+        - Text is wrong or contradicts another page
+        - Something does not render correctly
+        - The page fails to load at all
+        - Metadata or structured data looks wrong
+        - Something is inaccessible with a keyboard or screen reader
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened instead?
+      description: Include the exact error text if there was one.
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device, if relevant
+      placeholder: "Firefox 140 on Windows, or iOS Safari on iPhone"
+    validations:
+      required: false
+
+  - type: input
+    id: node
+    attributes:
+      label: Node version, if this happened while running the checks
+      description: Output of `node --version`. The checks need Node 20 or later.
+    validations:
+      required: false

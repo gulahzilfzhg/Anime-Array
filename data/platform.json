@@ -1,0 +1,56 @@
+{
+  "$comment": "Canonical facts about the Anime Array platform. The single source these claims are repeated from, so that every page states them identically.",
+  "updated": "2026-10-17",
+  "name": "Anime Array",
+  "alternateName": "AnimeArray",
+  "definition": "Anime Array is a free, independent, fan-built platform of AI tools for anime fans.",
+  "email": "contact@animearray.site",
+  "operator": "Independent fan project",
+  "language": "en-GB",
+  "found": "https://animearray.site/",
+  "properties": {
+    "$comment": "Framed as positive properties of the platform rather than negative claims, so the required values are unambiguous: free and ad-block-safe are true, everything else is false.",
+    "isFree": true,
+    "coreFeaturesWorkWithAdsBlocked": true,
+    "requiresAccountForCoreFeatures": false,
+    "hostsVideo": false,
+    "isAffiliatedWithAnyStudio": false,
+    "usesVoiceCloning": false,
+    "sellsUserData": false,
+    "hasSubscription": false,
+    "hasPremiumTier": false,
+    "revenueModel": "Advertising, clearly labelled on every placement"
+  },
+  "requiredClaims": {
+    "$comment": "These seven claims appear in every About-level description. The repository's own content policy requires all of them and forbids the wording from drifting.",
+    "claims": [
+      "Free. Every core feature.",
+      "No account required. For any core feature.",
+      "Hosts no video. No episodes, films, subtitles or media files.",
+      "Not affiliated with, endorsed by, licensed by or sponsored by any anime studio, publisher, licensor or rights holder.",
+      "No voice cloning. No real person's performance is reproduced.",
+      "User data is not sold.",
+      "Character replies are not canon. They are original responses in a character's voice."
+    ]
+  },
+  "nonAffiliation": "Anime Array is not affiliated with, endorsed by, licensed by, sponsored by, authorised by or approved by any anime studio, manga publisher, licensor, broadcaster, distributor, streaming service or rights holder.",
+  "contentPolicy": {
+    "characterRepliesAreCanon": false,
+    "protectedMediaReproduced": false,
+    "unauthorisedDownloadsLinked": false
+  },
+  "sites": [
+    { "label": "Main site",          "url": "https://animearray.site/" },
+    { "label": "Character roleplay", "url": "https://roleplay.animearray.site/" },
+    { "label": "Otaku AI",           "url": "https://otaku.animearray.site/" },
+    { "label": "AI Hub",             "url": "https://animearray.site/ai-hub/" },
+    { "label": "AniPick AI",         "url": "https://animearray.site/anipick/" },
+    { "label": "Vision AI",          "url": "https://animearray.site/vision-ai/" },
+    { "label": "About Us",           "url": "https://animearray.site/about-us/" },
+    { "label": "FAQs",               "url": "https://animearray.site/faqs/" },
+    { "label": "Contact",            "url": "https://animearray.site/contact-us/" },
+    { "label": "Privacy Policy",     "url": "https://animearray.site/privacy-policy/" },
+    { "label": "Terms of Service",   "url": "https://animearray.site/terms-of-service/" },
+    { "label": "Corrections Policy", "url": "https://animearray.site/editorial-guidelines-and-corrections-policy/" }
+  ]
+}

@@ -1,0 +1,16 @@
+# Default owners for everything in the repository.
+# Reviewed automatically on every pull request.
+
+* @muqeet-1138
+
+# Documentation site source. Changes here affect what is published.
+/docs/            @muqeet-1138
+/docs/assets/     @muqeet-1138
+
+# Machine-readable reference data. Cross-validated against docs/ by CI.
+/data/            @muqeet-1138
+
+# The checks that enforce the consistency rules. Changing these without
+# changing the content would defeat their purpose, so they are owner-gated.
+/tools/           @muqeet-1138
+/.github/         @muqeet-1138

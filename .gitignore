@@ -1,0 +1,60 @@
+# Build output and dependencies
+node_modules/
+dist/
+build/
+.next/
+.cache/
+.vendor/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# Editor and OS noise
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# OS and editor backups
+*.bak
+*.orig
+*.rej
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# Temporary scratch
+tmp/
+scratch/
+.sandbox/
+.playwright/
+screenshots/
+
+# Do not commit private notes or local credentials
+*.local
+private/
+internal/
+notes/
+
+# Deploy output
+docs/.cache/
+docs/.jekyll-cache/

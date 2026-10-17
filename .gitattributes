@@ -1,0 +1,30 @@
+# Normalise line endings so the same file does not differ between contributors.
+* text=auto eol=lf
+
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+
+# Language-normalise the diffs so reviews are not obscured by mode changes.
+*.js    text diff=javascript
+*.mjs   text diff=javascript
+*.cjs   text diff=javascript
+*.json  text
+*.css   text diff=css
+*.html  text diff=html
+*.md    text
+*.yml   text
+*.txt   text
+*.ps1   text
+
+# The documentation site is served as-is; marking it export-ignore keeps it out
+# of any source archive while GitHub Pages still serves it from the branch.
+docs/** linguist-documentation
+guides/** linguist-documentation

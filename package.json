@@ -1,0 +1,37 @@
+{
+  "name": "animearray",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Documentation and reference material for Anime Array, an independent platform of free AI tools for anime fans. Publishes the documentation site via GitHub Pages.",
+  "keywords": [
+    "anime",
+    "documentation",
+    "roleplay",
+    "recommendations",
+    "static-site"
+  ],
+  "homepage": "https://muqeet-1138.github.io/Anime-Array/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muqeet-1138/Anime-Array.git"
+  },
+  "bugs": {
+    "url": "https://github.com/muqeet-1138/Anime-Array/issues"
+  },
+  "license": "MIT",
+  "author": "Anime Array <contact@animearray.site>",
+  "engines": {
+    "node": ">=20"
+  },
+  "//": "There are no runtime dependencies and there is no build step. Everything below is a convenience wrapper around a single Node script so that `npm test` works without anyone having to remember the path.",
+  "scripts": {
+    "test": "node tools/check-site.mjs",
+    "check": "node tools/check-site.mjs",
+    "check:data": "node tools/check-data.mjs",
+    "verify": "node tools/check-data.mjs && node tools/check-site.mjs",
+    "serve": "node tools/serve.mjs",
+    "cards": "powershell -ExecutionPolicy Bypass -File tools/make-og-cards.ps1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

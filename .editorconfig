@@ -1,0 +1,36 @@
+# EditorConfig. Keeps whitespace consistent across contributors who use wildly
+# different editors, which removes a whole category of pointless diff noise.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{html,css,js,mjs,cjs,json}]
+indent_size = 4
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+indent_size = 2
+# Two trailing spaces are a hard line break in Markdown. Do not strip them.
+trim_trailing_whitespace = false
+
+[*.{ps1,psm1}]
+indent_size = 4
+
+[*.{png,jpg,jpeg,gif,webp}]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+[*.txt]
+insert_final_newline = false
+
+[LICENSE]
+insert_final_newline = false
